@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA Imagery</title>
+    <link rel="stylesheet" href="/styles/main.css" >
+    <link href="https://fonts.cdnfonts.com/css/avenir-lt-pro" rel="stylesheet">
+</head>
+<body class="gradient-background">
+    <header>
+        <a href="https://epic.gsfc.nasa.gov/" target="_blank"><img height="50" width="50" src="https://www.nasa.gov/wp-content/themes/nasa/assets/images/nasa-logo.svg"></a>
+        <h1>DSCOVR: EPIC Imagery</h1>
+    </header>
+    <main>
+        <div class="left-box">
+            <p>The EPIC provides information on the daily imagery collected by DSCOVR's Earth Polychromatic Imaging Camera (EPIC) instrument. Uniquely positioned at the Earth-Sun Lagrange point, EPIC provides full disc imagery of the Earth and captures unique perspectives of certain astronomical events such as lunar transits using a 2048x2048 pixel CCD (Charge Coupled Device) detector coupled to a 30-cm aperture Cassegrain telescope. Pick a date and go!</p>
+        </div>
+        <div class="mid-box">
+            <div class="date-box">
+                <form action="/go" id="form" class="form" method="POST">
+                    <input type="date" name="selectedDate" required>
+                    <button type="submit" class="form-submit">Go</button>
+                </form>
+            </div>
+            <div class="main-box">
+                <% if (locals.year) { %>
+                <a href="https://epic.gsfc.nasa.gov/archive/natural/<%= year %>/<%= month %>/<%= day %>/png/epic_1b_<%= imgName %>.png"  target="_blank"><img id="earth" src="https://epic.gsfc.nasa.gov/archive/natural/<%= year %>/<%= month %>/<%= day %>/png/epic_1b_<%= imgName %>.png"></a>
+                <p>The appearance of our planet on <%= year %>/<%= month %>/<%= day %></p>
+                <% } else { %>
+                <a href="https://epic.gsfc.nasa.gov/" target="_blank"><img id="nasa" src="https://www.nasa.gov/wp-content/themes/nasa/assets/images/nasa-logo.svg"></a>
+                <% } %>
+
+                <% if (locals.error) {%>
+                    <div id="tag-error" class="tag-error">
+                    Image cannot be found in NASA's database.
+                    </div>
+                <% } %>
+            </div>
+        </div>
+        <div class="right-box">
+            <% if (locals.year) { %>
+                <p><span>Identifier:</span> <%= imgName %></p>
+                <p><span>Date:</span> <%= date %></p>
+                <p><span>Lattitude:</span> <%= lat %></p>
+                <p><span>Longtitude:</span> <%= lon %></p>
+            <% } else { %>
+                <p><span>Identifier:</span></p>
+                <p><span>Date:</span></p>
+                <p><span>Lattitude:</span></p>
+                <p><span>Longtitude:</span></p>
+            <% } %>
+        </div>
+    </main>
+    <footer>
+        <p>© <%= new Date().getFullYear() %> Salim Kılınç</p>
+    </footer>
+</body>
+</html>
